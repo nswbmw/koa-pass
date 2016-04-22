@@ -13,10 +13,10 @@ middleware.pass = require('koa-pass')
 middleware.pass(opts, _pathToRegexpOpts)
 ```
 
-- opts: Object|Array
+- opts: {Object|Array}
   - method: {String|Array} http method, required.
   - path: {String} path for [path-to-regexp](https://www.npmjs.com/package/path-to-regexp), required.
-  - pass: {Boolean|Function} if return true then pass, optional.
+  - pass: {Boolean|Function} if return true then pass, optional, default `true`.
 - _pathToRegexpOpts: see [path-to-regexp](https://www.npmjs.com/package/path-to-regexp).
 
 ### Examples
