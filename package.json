@@ -1,0 +1,30 @@
+{
+  "name": "koa-pass",
+  "version": "1.0.0",
+  "description": "Conditionally skip a middleware when a condition is met.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "nswbmw",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nswbmw/koa-pass"
+  },
+  "keywords": [
+    "koa",
+    "pass",
+    "through",
+    "unless"
+  ],
+  "devDependencies": {
+    "koa": "^1.2.0",
+    "koa-jwt": "^1.2.0",
+    "mocha": "^2.4.5",
+    "supertest": "^1.2.0"
+  },
+  "dependencies": {
+    "path-to-regexp": "^1.2.1"
+  }
+}
