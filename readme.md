@@ -1,14 +1,18 @@
 ## koa-pass
 
-Conditionally skip a middleware when a condition is met.
+> Conditionally skip a middleware when a condition is met.
+
+**NB:** koa-pass@1 for koa@1.
 
 ### Install
 
-    npm i koa-pass --save
+```sh
+$ npm i koa-pass --save
+```
 
 ### Usage
 
-```
+```js
 middleware.pass = require('koa-pass')
 middleware.pass(opts, _pathToRegexpOpts)
 ```
@@ -17,46 +21,55 @@ middleware.pass(opts, _pathToRegexpOpts)
   - method: {String|Array} http method, required.
   - path: {String} path for [path-to-regexp](https://www.npmjs.com/package/path-to-regexp), required.
   - pass: {Boolean|Function} if return true then pass, optional, default `true`.
-- _pathToRegexpOpts: see [path-to-regexp](https://www.npmjs.com/package/path-to-regexp).
+- _pathToRegexpOpts: {Object} see [path-to-regexp](https://www.npmjs.com/package/path-to-regexp).
 
 ### Examples
 
-```
-var koa = require('koa');
-var jwt = require('koa-jwt')();
-jwt.pass = require('koa-pass');
+```js
+const Koa = require('koa')
+const res = require('koa-res')()
+res.pass = require('./')
 
-var app = koa();
-app.use(jwt.pass([
-  { method: 'POST', path: '/signin' },
-  { method: 'POST', path: '/signup' }
-]));
-...
-app.listen(3000);
+const app = new Koa()
+app.use(res.pass([
+  { method: 'GET', path: '/pass' }
+]))
+app.use((ctx) => {
+  ctx.body = 'ok'
+})
+app.listen(3000, () => {
+  console.log('listening on 3000')
+})
 ```
 
 or:
 
-```
-var koa = require('koa');
-var jwt = require('koa-jwt')();
-jwt.pass = require('koa-pass');
+```js
+const Koa = require('koa')
+const res = require('koa-res')()
+res.pass = require('./')
 
-var app = koa();
-app.use(jwt.pass({
-  method: 'POST',
-  path: '/:admin',
-  pass: function* () {
-    return ['/signin', '/signup'].indexOf(this.path) !== -1;
+const app = new Koa()
+app.use(res.pass({
+  method: 'GET',
+  path: '/:name',
+  pass: async (ctx) => {
+    return ctx.path === '/pass'
   }
-}));
-...
-app.listen(3000);
+}))
+app.use((ctx) => {
+  ctx.body = 'ok'
+})
+app.listen(3000, () => {
+  console.log('listening on 3000')
+})
 ```
 
 ### Test
 
-    npm test
+```sh
+$ npm test
+```
 
 ### License
 

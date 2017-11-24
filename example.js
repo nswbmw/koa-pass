@@ -1,18 +1,18 @@
-'use strict';
+const Koa = require('koa')
+const res = require('koa-res')()
+res.pass = require('./')
 
-var koa = require('koa');
-var jwt = require('koa-jwt')();
-jwt.pass = require('./');
-
-var app = koa();
-app.use(jwt.pass({
-  method: 'POST',
-  path: '/:admin',
-  pass: function* () {
-    return ['/signin', '/signup'].indexOf(this.path) !== -1;
+const app = new Koa()
+app.use(res.pass({
+  method: 'GET',
+  path: '/:name',
+  pass: async (ctx) => {
+    return ctx.path === '/pass'
   }
-}));
-app.use(function* () {
-  this.body = 'ok';
-});
-app.listen(3000);
+}))
+app.use((ctx) => {
+  ctx.body = 'ok'
+})
+app.listen(3000, () => {
+  console.log('listening on 3000')
+})
